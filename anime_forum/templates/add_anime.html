@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="col-md-6 offset-md-3">
+            <h1>Adicionar Anime</h1>
+            <br>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <br>
+                <button type="submit" class="btn btn-secondary">Adicionar</button>
+            </form>
+        </div>
+    {% else %}
+        <h1>Voce Precisa Estar Logado Para Visualizar Essa Pagina</h1>
+        <a href="{% url "login" %}">Faca Login Aqui</a>
+    {% endif %}
+{% endblock content %}
