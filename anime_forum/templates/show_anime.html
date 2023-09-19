@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>{{ anime.anime_name }}</h1>
+    {% comment %} <section class="py-6">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" src="{{ anime.anime_image.url }}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{ anime.anime_name }}</h5>
+                                <!-- Product price-->
+                                <br>
+                                {{ animes.anime_description }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> {% endcomment %}
+    <img src="{{ anime.anime_image.url }}"  height="400px" alt="">
+    <br>
+    <br>
+    <h3>COMENTARIOS</h3>
+    {% for comments in comment %}
+        <div class=" col-8 alert alert-dark" role="alert">{{ comments.body }} {{ comments.anime.id }}</div>
+        <br>
+    {% endfor %}
+    <div class="col-8">
+        {% if form %}
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-secondary">Comentar</button>
+                <br>
+            </form>
+        {% endif %}
+    </div>
+{% endblock content %}

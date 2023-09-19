@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
-from .forms import RegisterForm, AddAnimeForm
-from .models import AddAnime
+from .forms import RegisterForm, AddAnimeForm, CommentForm
+from .models import AddAnime, Comment
 
 
 # Create your views here.
@@ -83,3 +83,25 @@ def add_anime(request):
         return render(request, "add_anime.html", {"form": form})
     else:
         return render(request, "add_anime.html", {"form": form})
+
+
+def show_anime(request, pk):
+    anime = get_object_or_404(AddAnime, id=pk)
+    form = CommentForm(request.POST or None)
+    comment = Comment.objects.all()
+
+    if request.method == "POST":
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.save()
+            return redirect("show_anime")
+
+    if anime:
+        return render(
+            request,
+            "show_anime.html",
+            {"anime": anime, "form": form, "comment": comment},
+        )
+    else:
+        return redirect("home")

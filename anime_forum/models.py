@@ -12,9 +12,20 @@ class Profile(models.Model):
         return self.username
 
 
+# Add new Anime
+class AddAnime(models.Model):
+    anime_name = models.CharField(max_length=100)
+    anime_image = models.ImageField(null=False, blank=False, upload_to="images/anime")
+    anime_description = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.anime_name
+
+
 # Comments
 class Comment(models.Model):
-    user = (models.ForeignKey(User, on_delete=models.CASCADE),)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    anime = models.ForeignKey(AddAnime, on_delete=models.CASCADE)
     body = models.CharField(max_length=300)
     date_creation = models.DateTimeField(auto_now_add=True)
 
@@ -28,13 +39,3 @@ class Replys(models.Model):
     date_creation = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     comment_connect = models.ForeignKey(Comment, on_delete=models.CASCADE)
-
-
-# Add new Anime
-class AddAnime(models.Model):
-    anime_name = models.CharField(max_length=100)
-    anime_image = models.ImageField(null=False, blank=False, upload_to="images/anime")
-    anime_description = models.CharField(max_length=300)
-
-    def __str__(self):
-        return self.anime_name
