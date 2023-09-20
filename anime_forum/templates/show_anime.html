@@ -27,10 +27,22 @@
     <br>
     <br>
     <h3>COMENTARIOS</h3>
-    {% for comments in comment %}
+    {% comment %} {% for comments in comment %}
         <div class=" col-8 alert alert-dark" role="alert">{{ comments.body }} {{ comments.anime.id }}</div>
         <br>
-    {% endfor %}
+    {% endfor %} {% endcomment %}
+    {% if not post.comments.all %}
+        Sem COMENTARIOS <a href="#">Adicionar Comentario</a>
+    {% else %}
+        {% for comment in post.comments.all %}
+            <strong>{{ comment.user }}
+                {{ comment.date_creation }}
+            </strong>
+            <br>
+            {{ comment.body }}
+            <br>
+        {% endfor %}
+    {% endif %}
     <div class="col-8">
         {% if form %}
             <form method="POST">

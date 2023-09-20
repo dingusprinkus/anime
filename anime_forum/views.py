@@ -3,16 +3,17 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
-from .forms import RegisterForm, AddAnimeForm, CommentForm
-from .models import AddAnime, Comment
+from .forms import RegisterForm, AddAnimeForm, CommentForm, PostForm
+from .models import AddAnime, Comment, Post
 
 
 # Create your views here.
 def home(request):
     # Pegar todos os objetos do model AddAnime na DB(Nome,Image,Descricao)
     anime = AddAnime.objects.all()
+    post = Post.objects.all()
 
-    return render(request, "home.html", {"anime": anime})
+    return render(request, "home.html", {"anime": anime, "post": post})
 
 
 def login_user(request):
@@ -75,33 +76,49 @@ def add_anime(request):
     if request.user.is_authenticated:
         # Se requisicao for um POST, Usa o formuladio de AddAnimeForm do forms.py
         form = AddAnimeForm(request.POST or None, request.FILES or None)
+        form_post = PostForm(request.POST or None, request.FILES or None)
         if request.method == "POST":
-            if form.is_valid():
+            if form.is_valid() and form_post.is_valid():
                 form.save()
+                form_post.save()
                 messages.success(request, "Anime Adicionado Com Sucesso")
                 return redirect("home")
-        return render(request, "add_anime.html", {"form": form})
+        return render(request, "add_anime.html", {"form": form, "form_post": form_post})
     else:
-        return render(request, "add_anime.html", {"form": form})
+        return render(request, "add_anime.html", {"form": form, "form_post": form_post})
 
 
 def show_anime(request, pk):
     anime = get_object_or_404(AddAnime, id=pk)
     form = CommentForm(request.POST or None)
-    comment = Comment.objects.all()
+    post = get_object_or_404(Post, id=pk)
+    # post = Post.objects.all()
 
     if request.method == "POST":
         if form.is_valid():
-            comment = form.save(commit=False)
-            comment.user = request.user
-            comment.save()
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
             return redirect("show_anime")
 
     if anime:
         return render(
             request,
             "show_anime.html",
-            {"anime": anime, "form": form, "comment": comment},
+            {"anime": anime, "form": form, "post": post},
         )
     else:
         return redirect("home")
+
+    return render(request, "show_anime.html", {"post": post, "anime": anime})
+
+
+# path("comment/<int:post_id>/", CommentCreateView, name="comment-create")
+# <a class="btn btn-primary" href="{% url 'comment-create' userpost.id %}" role="button">Leave a Comment</a>
+# class CommentCreateView(CreateView):
+#     model = Comment
+#     fields = ['content'] # remove field post here
+
+#     def form_valid(self, form):
+#        form.instance.post_id = self.kwargs.get("post_id")
+#        return super().form_valid(form)

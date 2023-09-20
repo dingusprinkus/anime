@@ -22,11 +22,25 @@ class AddAnime(models.Model):
         return self.anime_name
 
 
+class Post(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=150)
+    image = models.ImageField(null=True, blank=True, upload_to="images/post")
+    date_creation = models.DateTimeField(auto_now_add=True)
+    body = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.title + " | " + str(self.user)
+
+
 # Comments
 class Comment(models.Model):
+    post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    anime = models.ForeignKey(AddAnime, on_delete=models.CASCADE)
-    body = models.CharField(max_length=300)
+    anime = models.ForeignKey(
+        AddAnime, on_delete=models.CASCADE
+    )  # Nao precisa dessa field supostamente
+    body = models.TextField(max_length=300)
     date_creation = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

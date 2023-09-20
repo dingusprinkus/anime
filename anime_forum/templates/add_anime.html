@@ -8,6 +8,9 @@
                 {% csrf_token %}
                 {{ form.as_p }}
                 <br>
+                Post Discussao
+                {{ form_post.as_p }}
+                <br>
                 <button type="submit" class="btn btn-secondary">Adicionar</button>
             </form>
         </div>

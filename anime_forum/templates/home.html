@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+    {{ user }}
     {% comment %} {% for animes in anime %} {% endcomment %}
     {% comment %} <div class="col mb-5">
             <div class="card h-100" style="width: 18rem;">
@@ -33,7 +34,7 @@
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center">
                                     <a class="btn btn-outline-dark mt-auto"
-                                       target=" _blank"
+                                       target="_blank"
                                        href="{% url "show_anime" animes.id %}">Ver Comentarios</a>
                                 </div>
                             </div>

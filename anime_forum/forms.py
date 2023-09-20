@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comment, Profile, AddAnime
+from .models import Comment, Post, Profile, AddAnime
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -77,4 +77,24 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        exclude = ("user", "anime")
+        exclude = ("user", "anime", "post")
+
+
+class PostForm(forms.ModelForm):
+    user = forms.Select()
+
+    anime = forms.Select()
+    title = forms.CharField(
+        label="",
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "placeholder": "Nome do Anime"}
+        ),
+    )
+    body = forms.CharField(
+        label="",
+        widget=forms.Textarea(attrs={"class": "form-control", "placeholder": "Body"}),
+    )
+
+    class Meta:
+        model = Post
+        exclude = ("image", "anime")
