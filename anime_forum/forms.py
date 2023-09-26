@@ -77,7 +77,7 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        exclude = ("user", "anime", "post")
+        fields = ("body",)
 
 
 class PostForm(forms.ModelForm):
@@ -87,7 +87,7 @@ class PostForm(forms.ModelForm):
     title = forms.CharField(
         label="",
         widget=forms.TextInput(
-            attrs={"class": "form-control", "placeholder": "Nome do Anime"}
+            attrs={"class": "form-control", "placeholder": "Titulo Post"}
         ),
     )
     body = forms.CharField(

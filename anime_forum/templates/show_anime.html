@@ -14,7 +14,7 @@
                                 <!-- Product name-->
                                 <h5 class="fw-bolder">{{ anime.anime_name }}</h5>
                                 <!-- Product price-->
-                                <br>
+                                <br />
                                 {{ animes.anime_description }}
                             </div>
                         </div>
@@ -23,13 +23,13 @@
             </div>
         </div>
     </section> {% endcomment %}
-    <img src="{{ anime.anime_image.url }}"  height="400px" alt="">
-    <br>
-    <br>
+    <img src="{{ anime.anime_image.url }}"  height="400px" alt="" />
+    <br />
+    <br />
     <h3>COMENTARIOS</h3>
     {% comment %} {% for comments in comment %}
         <div class=" col-8 alert alert-dark" role="alert">{{ comments.body }} {{ comments.anime.id }}</div>
-        <br>
+        <br />
     {% endfor %} {% endcomment %}
     {% if not post.comments.all %}
         Sem COMENTARIOS <a href="#">Adicionar Comentario</a>
@@ -38,19 +38,15 @@
             <strong>{{ comment.user }}
                 {{ comment.date_creation }}
             </strong>
-            <br>
+            <br />
             {{ comment.body }}
-            <br>
+            <br />
         {% endfor %}
     {% endif %}
-    <div class="col-8">
-        {% if form %}
-            <form method="POST">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-secondary">Comentar</button>
-                <br>
-            </form>
-        {% endif %}
-    </div>
+    <br />
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-secondary" type="submit">Comentar</button>
+    </form>
 {% endblock content %}

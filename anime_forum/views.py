@@ -90,27 +90,27 @@ def add_anime(request):
 
 def show_anime(request, pk):
     anime = get_object_or_404(AddAnime, id=pk)
-    form = CommentForm(request.POST or None)
     post = get_object_or_404(Post, id=pk)
-    # post = Post.objects.all()
+    form = CommentForm(request.POST)
 
     if request.method == "POST":
         if form.is_valid():
-            post = form.save(commit=False)
-            post.user = request.user
-            post.save()
-            return redirect("show_anime")
+            form.save(commit=False)
+            form.instance.post = Post.objects.get(pk=post.id)
+            form.instance.user = request.user
+            form.save()
+        return redirect(request.META.get("HTTP_REFERER"))
 
-    if anime:
-        return render(
-            request,
-            "show_anime.html",
-            {"anime": anime, "form": form, "post": post},
-        )
-    else:
-        return redirect("home")
+    return render(
+        request, "show_anime.html", {"post": post, "anime": anime, "form": form}
+    )
 
-    return render(request, "show_anime.html", {"post": post, "anime": anime})
+
+def add_comment(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    form = CommentForm(request.POST or None)
+
+    return render(request, "add_comment.html", {"form": form, "post": post})
 
 
 # path("comment/<int:post_id>/", CommentCreateView, name="comment-create")

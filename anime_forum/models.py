@@ -37,9 +37,6 @@ class Post(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    anime = models.ForeignKey(
-        AddAnime, on_delete=models.CASCADE
-    )  # Nao precisa dessa field supostamente
     body = models.TextField(max_length=300)
     date_creation = models.DateTimeField(auto_now_add=True)
 
