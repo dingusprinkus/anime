@@ -1,5 +1,12 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
+    {{ user.profile.user }}
+    <img src="{{ user.profile.profile_image.url }}"
+         width="100"
+         height="100"
+         class="rounded-circle"
+         alt="" />
     <h1>{{ anime.anime_name }}</h1>
     {% comment %} <section class="py-6">
         <div class="container px-4 px-lg-5 mt-5">
@@ -35,11 +42,31 @@
         Sem COMENTARIOS <a href="#">Adicionar Comentario</a>
     {% else %}
         {% for comment in post.comments.all %}
-            <strong>{{ comment.user }}
-                {{ comment.date_creation }}
-            </strong>
-            <br />
-            {{ comment.body }}
+            <div class="alert alert-light" role="alert">
+                <div class="row">
+                    <div class="col-1">
+                        {% if post.user.profile.profile_image %}
+                            <img src="{{ comment.user.profile.profile_image.url }}"
+                                 width="100"
+                                 height="100"
+                                 class="rounded-circle"
+                                 alt="" />
+                        {% else %}
+                            <img src="{% static "\images\users\419d80fc47dbb030167929078cf52dd6d4b03f1c_full.jpg" %}"
+                                 width="100"
+                                 height="100"
+                                 class="rounded-circle"
+                                 alt="" />
+                        {% endif %}
+                    </div>
+                    <div class="col-10">
+                        {{ comment.body }}
+                        <br />
+                        <br />
+                        <small class="text-muted">({{ comment.date_creation }}) By: @<strong>{{ comment.user }}</strong></small>
+                    </div>
+                </div>
+            </div>
             <br />
         {% endfor %}
     {% endif %}

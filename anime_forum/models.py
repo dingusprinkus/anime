@@ -9,7 +9,7 @@ class Profile(models.Model):
     profile_bio = models.CharField(null=True, blank=True, max_length=200)
 
     def __str__(self):
-        return self.username
+        return f"{self.user}"
 
 
 # Add new Anime

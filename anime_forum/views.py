@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
 from .forms import RegisterForm, AddAnimeForm, CommentForm, PostForm
-from .models import AddAnime, Comment, Post
+from .models import AddAnime, Comment, Post, Profile
 
 
 # Create your views here.
@@ -102,7 +102,13 @@ def show_anime(request, pk):
         return redirect(request.META.get("HTTP_REFERER"))
 
     return render(
-        request, "show_anime.html", {"post": post, "anime": anime, "form": form}
+        request,
+        "show_anime.html",
+        {
+            "post": post,
+            "anime": anime,
+            "form": form,
+        },
     )
 
 

@@ -11,10 +11,11 @@ class RegisterForm(UserCreationForm):
             attrs={"class": "form-control", "placeholder": "Email Address"}
         ),
     )
+    profile_image = forms.ImageField(required=True)
 
     class Meta:
         model = User
-        fields = ("username", "email", "password1", "password2")
+        fields = ("username", "email", "password1", "password2", "profile_image")
 
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
