@@ -38,7 +38,13 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField(max_length=300)
+    likes = models.ManyToManyField(User, related_name="post_like", blank=True)
+
     date_creation = models.DateTimeField(auto_now_add=True)
+
+    # Track num likes
+    def num_of_likes(self):
+        return self.likes.count()
 
     def __str__(self):
         return f"{self.user}" f"({self.date_creation: %d-%m-%Y %H:%M}:)" f"{self.body}"

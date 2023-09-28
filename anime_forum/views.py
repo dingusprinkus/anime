@@ -119,6 +119,17 @@ def add_comment(request, pk):
     return render(request, "add_comment.html", {"form": form, "post": post})
 
 
+def post_likes(request, pk):
+    if request.user.is_authenticated:
+        post = get_object_or_404(Comment, id=pk)
+        if post.likes.filter(id=request.user.id):
+            post.likes.remove(request.user)
+        else:
+            post.likes.add(request.user)
+
+        return redirect(request.META.get("HTTP_REFERER"))
+
+
 # path("comment/<int:post_id>/", CommentCreateView, name="comment-create")
 # <a class="btn btn-primary" href="{% url 'comment-create' userpost.id %}" role="button">Leave a Comment</a>
 # class CommentCreateView(CreateView):
