@@ -98,4 +98,4 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        exclude = ("image", "anime")
+        exclude = ("image", "anime", "user")
