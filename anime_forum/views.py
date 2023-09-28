@@ -80,6 +80,8 @@ def add_anime(request):
         if request.method == "POST":
             if form.is_valid() and form_post.is_valid():
                 form.save()
+                form_post.save(commit=False)
+                form_post.instance.user = request.user
                 form_post.save()
                 messages.success(request, "Anime Adicionado Com Sucesso")
                 return redirect("home")
