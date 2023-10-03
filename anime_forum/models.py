@@ -35,7 +35,9 @@ class Post(models.Model):
 
 # Comments
 class Comment(models.Model):
-    post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
+    post = models.ForeignKey(
+        Post, related_name="comments", null=True, on_delete=models.CASCADE
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField(max_length=300)
     likes = models.ManyToManyField(User, related_name="post_like", blank=True)
@@ -56,3 +58,12 @@ class Replys(models.Model):
     date_creation = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     comment_connect = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    reply_count = models.ManyToManyField(
+        Comment, related_name="reply_count", blank=True
+    )
+
+    def num_of_replys(self):
+        return self.reply_count.count()
+
+    def __str__(self):
+        return f"{self.author} - {self.content} - {self.comment_connect}"

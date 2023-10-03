@@ -1,5 +1,7 @@
 from django import forms
-from .models import Comment, Post, Profile, AddAnime
+
+
+from .models import Comment, Post, Profile, AddAnime, Replys
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -99,3 +101,20 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         exclude = ("image", "anime", "user")
+
+
+class ReplyForm(forms.ModelForm):
+    content = (
+        forms.CharField(
+            label="",
+            widget=forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Titulo Post"}
+            ),
+        ),
+    )
+
+    # comment_connect = forms.Select()
+
+    class Meta:
+        model = Replys
+        exclude = ("date_creation", "author", "reply_count", "comment_connect")

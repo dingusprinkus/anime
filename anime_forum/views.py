@@ -3,8 +3,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
-from .forms import RegisterForm, AddAnimeForm, CommentForm, PostForm
-from .models import AddAnime, Comment, Post, Profile
+from .forms import RegisterForm, AddAnimeForm, CommentForm, PostForm, ReplyForm
+from .models import AddAnime, Comment, Post, Profile, Replys
 
 
 # Create your views here.
@@ -93,6 +93,7 @@ def add_anime(request):
 def show_anime(request, pk):
     anime = get_object_or_404(AddAnime, id=pk)
     post = get_object_or_404(Post, id=pk)
+
     form = CommentForm(request.POST)
 
     if request.method == "POST":
@@ -130,6 +131,32 @@ def post_likes(request, pk):
             post.likes.add(request.user)
 
         return redirect(request.META.get("HTTP_REFERER"))
+
+
+def reply_comment(request, pk):
+    comment = get_object_or_404(Comment, id=pk)
+    # post = get_object_or_404(Post, id=pk)
+    replys = Replys.objects.all()
+    post = get_object_or_404(Comment, id=pk)
+
+    form = ReplyForm(request.POST or None)
+
+    if comment:
+        if request.method == "POST":
+            if form.is_valid():
+                comment = form.save(commit=False)
+                # form.instance.post = Post.objects.get(pk=post.id)
+                comment.user = request.user
+                comment.author = request.user
+                comment.comment_connect = Comment.objects.get(pk=post.id)
+                comment.save()
+                return redirect(request.META.get("HTTP_REFERER"))
+        else:
+            return render(
+                request,
+                "reply_comment.html",
+                {"comment": comment, "form": form, "replys": replys},
+            )
 
 
 # path("comment/<int:post_id>/", CommentCreateView, name="comment-create")
