@@ -7,14 +7,9 @@
                 <div class="alert alert-light" role="alert">
                     <div class="row">
                         <div class="col-1">
-                            {% if post.user.profile.profile_image %}
+                            {% if comment.user.profile.profile_image %}
                                 <img src="{{ comment.user.profile.profile_image.url }}"
-                                     width="100"
-                                     height="100"
-                                     class="rounded-circle"
-                                     alt="" />
-                            {% else %}
-                                <img src="{% static "\images\users\419d80fc47dbb030167929078cf52dd6d4b03f1c_full.jpg" %}"
+                                     alt=""
                                      width="100"
                                      height="100"
                                      class="rounded-circle"
@@ -28,12 +23,6 @@
                             <small class="text-muted">({{ comment.date_creation }}) By: @<strong>{{ comment.user }}</strong></small>
                             &nbsp;&nbsp;&nbsp;<a href="#"><i class="fas fa-reply"></i></a>
                             &nbsp;&nbsp;
-                            {{ comment.num_of_likes }}
-                            {% if user in comment.likes.all %}
-                                <a href="{% url "post_likes" comment.id %}"><i class="fa-solid fa-heart" style="color:red"></i></a>
-                            {% else %}
-                                <a href="{% url "post_likes" comment.id %}"><i class="fa fa-heart-o" style="color:red"></i></a>
-                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -45,8 +34,8 @@
                         <div class="alert alert-light" role="alert">
                             <div class="row">
                                 <div class="col-1">
-                                    {% if post.user.profile.profile_image %}
-                                        <img src="{{ comment.user.profile.profile_image.url }}"
+                                    {% if comment.user.profile.profile_image %}
+                                        <img src="{{ reply.author.profile.profile_image.url }}"
                                              width="100"
                                              height="100"
                                              class="rounded-circle"
@@ -63,15 +52,9 @@
                                     {{ reply.content }}
                                     <br />
                                     <br />
-                                    <small class="text-muted">({{ comment.date_creation }}) By: @<strong>{{ comment.user }}</strong></small>
-                                    &nbsp;&nbsp;&nbsp;<a href="#"><i class="fas fa-reply"></i></a>
+                                    <small class="text-muted">({{ comment.date_creation }}) By: @<strong>{{ reply.author }}</strong></small>
+                                    &nbsp;&nbsp;&nbsp;<a href="{% url "reply_comment" reply.id %}"><i class="fas fa-reply"></i></a>
                                     &nbsp;&nbsp;
-                                    {{ comment.num_of_likes }}
-                                    {% if user in comment.likes.all %}
-                                        <a href="{% url "post_likes" comment.id %}"><i class="fa-solid fa-heart" style="color:red"></i></a>
-                                    {% else %}
-                                        <a href="{% url "post_likes" comment.id %}"><i class="fa fa-heart-o" style="color:red"></i></a>
-                                    {% endif %}
                                 </div>
                             </div>
                         </div>

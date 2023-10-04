@@ -38,12 +38,12 @@
                             &nbsp;&nbsp;&nbsp;<a href="{% url "reply_comment" comment.id %}"><i class="fas fa-reply"></i></a>
                             &nbsp;&nbsp;
                             {{ comment.num_of_likes }}
-                            
                             {% if user in comment.likes.all %}
                                 <a href="{% url "post_likes" comment.id %}"><i class="fa-solid fa-heart" style="color:red"></i></a>
                             {% else %}
                                 <a href="{% url "post_likes" comment.id %}"><i class="fa fa-heart-o" style="color:red"></i></a>
                             {% endif %}
+                            
                         </div>
                     </div>
                 </div>
