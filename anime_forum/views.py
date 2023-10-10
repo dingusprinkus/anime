@@ -94,8 +94,7 @@ def show_anime(request, pk):
     anime = get_object_or_404(AddAnime, id=pk)
     post = get_object_or_404(Post, id=pk)
 
-    form = CommentForm(request.POST)
-
+    form = CommentForm(request.POST or None)
     if request.method == "POST":
         if form.is_valid():
             form.save(commit=False)

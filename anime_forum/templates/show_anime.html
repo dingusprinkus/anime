@@ -1,14 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-    <div class="container">
-        <div class="col-md-4">
-            <h1>{{ post.title }}</h1>
-        </div>
-        <br />
-        <br />
-        {{ post.user.number_of_comments }}
-        <h3>COMENTARIOS</h3>
+    <div class="container text-center">
         {% if not post.comments.all %}
             Sem COMENTARIOS <a href="#">Adicionar Comentario</a>
         {% else %}
@@ -43,7 +36,6 @@
                             {% else %}
                                 <a href="{% url "post_likes" comment.id %}"><i class="fa fa-heart-o" style="color:red"></i></a>
                             {% endif %}
-                            
                         </div>
                     </div>
                 </div>
@@ -52,9 +44,15 @@
         {% endif %}
         <br />
     </div>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-secondary" type="submit">Comentar</button>
-    </form>
+    <div class="container text-center">
+        <div class="row align-items-center">
+            <div class="col">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="btn btn-secondary" type="submit">Comentar</button>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock content %}

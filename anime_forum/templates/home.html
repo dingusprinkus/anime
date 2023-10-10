@@ -1,10 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-    
     {% comment %} {% for animes in anime %} {% endcomment %}
     {% comment %} <div class="col mb-5">
             <div class="card h-100" style="width: 18rem;">
-                <img src="{{ animes.anime_image.url }}" class="card-img-top" alt="...">
+                <img src="{{ animes.anime_image.url }}" class="card-img-top" alt="..." />
                 <div class="card-body">
                     <h5 class="card-title">{{ animes.anime_name }}</h5>
                     <p class="card-text">{{ animes.anime_description }}</p>
@@ -20,15 +19,15 @@
                         <div class="card h-100">
                             <!-- Product image-->
                             <img class="card-img-top" src="{{ animes.anime_image.url }}" alt="..." />
-                            <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
                                     <h5 class="fw-bolder">{{ animes.anime_name }}</h5>
                                     <!-- Product price-->
-                                    <br>
-                                    {{ animes.anime_description }}
+                                    <br />
+                                    <small>{{ animes.anime_description }}</small>
                                 </div>
+                                <!-- Product details-->
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">

@@ -7,6 +7,8 @@
                 <div class="alert alert-light" role="alert">
                     <div class="row">
                         <div class="col-1">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>{{ comment.user }}</strong>
+                            <br />
                             {% if comment.user.profile.profile_image %}
                                 <img src="{{ comment.user.profile.profile_image.url }}"
                                      alt=""
@@ -34,6 +36,8 @@
                         <div class="alert alert-light" role="alert">
                             <div class="row">
                                 <div class="col-1">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>{{ reply.author }}</strong>
+                                    <br />
                                     {% if comment.user.profile.profile_image %}
                                         <img src="{{ reply.author.profile.profile_image.url }}"
                                              width="100"

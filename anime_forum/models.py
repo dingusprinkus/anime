@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from datetime import date
+
 
 # User
 class Profile(models.Model):
@@ -41,7 +43,6 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField(max_length=300)
     likes = models.ManyToManyField(User, related_name="post_like", blank=True)
-
     date_creation = models.DateTimeField(auto_now_add=True)
 
     # Track num likes
