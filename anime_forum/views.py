@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from .forms import RegisterForm, AddAnimeForm, CommentForm, PostForm, ReplyForm
 from .models import AddAnime, Comment, Post, Profile, Replys
 
-
+#Test
 # Create your views here.
 def home(request):
     # Pegar todos os objetos do model AddAnime na DB(Nome,Image,Descricao)
